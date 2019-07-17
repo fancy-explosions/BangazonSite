@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Bangazon.Models
 {
@@ -16,6 +17,14 @@ namespace Bangazon.Models
 
     [NotMapped]
     public int Quantity { get; set; }
+
+        public int CategoryQuantity
+        {
+            get
+            {
+                return Products.Count();
+            }
+        }
 
     public virtual ICollection<Product> Products { get; set; }
   }
