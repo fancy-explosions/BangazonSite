@@ -70,8 +70,9 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ProductType)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ProductType.Label)
+            <a asp-controller="Products" asp-action="ProductTypeDetails" asp-route-id="@Model.ProductTypeId">(Details)</a>
         </dd>
     </dl>
 </div>
