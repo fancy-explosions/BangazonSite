@@ -83,7 +83,7 @@ namespace Bangazon.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "58926cf1-1252-4126-9d9f-10325e8e93b1",
+                            ConcurrencyStamp = "03d93916-a237-444b-a14b-d6f033e31c3b",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             FirstName = "Admina",
@@ -91,7 +91,7 @@ namespace Bangazon.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEI2rfIodGoVYR4KP8DDQx8gs4DF5kWsx3Q6tSo3mK533YUiXv4iL2/KSvXQ5D5yzIA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEE2T/R5ZBKd1iUr8bdjVr8wh8cm5Z+5VirfEGgRB2V95pgc9tfLL+uMMIOLgfsCqVQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             StreetAddress = "123 Infinity Way",
@@ -325,6 +325,186 @@ namespace Bangazon.Migrations
                             ProductTypeId = 3,
                             Quantity = 32,
                             Title = "Wrench",
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
+                        },
+                        new
+                        {
+                            ProductId = 7,
+                            Active = true,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Get on the river",
+                            Price = 249.99000000000001,
+                            ProductTypeId = 1,
+                            Quantity = 30,
+                            Title = "Canoe",
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
+                        },
+                        new
+                        {
+                            ProductId = 8,
+                            Active = true,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "21 Speed Mountain bike",
+                            Price = 499.99000000000001,
+                            ProductTypeId = 1,
+                            Quantity = 50,
+                            Title = "Bicycle",
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
+                        },
+                        new
+                        {
+                            ProductId = 9,
+                            Active = true,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Catch fish with this",
+                            Price = 2.9900000000000002,
+                            ProductTypeId = 1,
+                            Quantity = 100,
+                            Title = "Fishing Rod",
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
+                        },
+                        new
+                        {
+                            ProductId = 10,
+                            Active = true,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Clothes get dry in it",
+                            Price = 449.99000000000001,
+                            ProductTypeId = 2,
+                            Quantity = 25,
+                            Title = "Dryer",
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
+                        },
+                        new
+                        {
+                            ProductId = 11,
+                            Active = true,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Cleans dirty dishes",
+                            Price = 199.99000000000001,
+                            ProductTypeId = 2,
+                            Quantity = 10,
+                            Title = "Dishwasher",
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
+                        },
+                        new
+                        {
+                            ProductId = 12,
+                            Active = true,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Clean your dirty duds",
+                            Price = 299.99000000000001,
+                            ProductTypeId = 2,
+                            Quantity = 10,
+                            Title = "Washing Maching",
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
+                        },
+                        new
+                        {
+                            ProductId = 13,
+                            Active = true,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Smooth rough surfaces, orbitally",
+                            Price = 39.990000000000002,
+                            ProductTypeId = 3,
+                            Quantity = 50,
+                            Title = "Orbital Sander",
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
+                        },
+                        new
+                        {
+                            ProductId = 14,
+                            Active = true,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Unclog a drin with this",
+                            Price = 2.9900000000000002,
+                            ProductTypeId = 3,
+                            Quantity = 100,
+                            Title = "Plunger",
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
+                        },
+                        new
+                        {
+                            ProductId = 15,
+                            Active = true,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Jack up your car",
+                            Price = 99.989999999999995,
+                            ProductTypeId = 3,
+                            Quantity = 50,
+                            Title = "Pump Jack",
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
+                        },
+                        new
+                        {
+                            ProductId = 16,
+                            Active = true,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Fun for the whole family",
+                            Price = 12.99,
+                            ProductTypeId = 4,
+                            Quantity = 200,
+                            Title = "Monopoly",
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
+                        },
+                        new
+                        {
+                            ProductId = 17,
+                            Active = true,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Tie yourself in knots",
+                            Price = 29.989999999999998,
+                            ProductTypeId = 4,
+                            Quantity = 10,
+                            Title = "Twister",
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
+                        },
+                        new
+                        {
+                            ProductId = 18,
+                            Active = true,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Learn words and have fun",
+                            Price = 2.9900000000000002,
+                            ProductTypeId = 4,
+                            Quantity = 50,
+                            Title = "Scrabble",
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
+                        },
+                        new
+                        {
+                            ProductId = 19,
+                            Active = true,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "88 Keys digital piano",
+                            Price = 1099.99,
+                            ProductTypeId = 5,
+                            Quantity = 10,
+                            Title = "Keyboard",
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
+                        },
+                        new
+                        {
+                            ProductId = 20,
+                            Active = true,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "6 string acoustic",
+                            Price = 299.99000000000001,
+                            ProductTypeId = 5,
+                            Quantity = 20,
+                            Title = "Guitar",
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
+                        },
+                        new
+                        {
+                            ProductId = 21,
+                            Active = true,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Plug in and practice your rhythm",
+                            Price = 599.99000000000001,
+                            ProductTypeId = 5,
+                            Quantity = 15,
+                            Title = "Electric Drum Set",
                             UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                         });
                 });
