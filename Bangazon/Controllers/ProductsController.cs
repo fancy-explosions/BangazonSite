@@ -111,7 +111,9 @@ namespace Bangazon.Controllers
         {
 
             ModelState.Remove("Product.User");
-            ModelState.Remove("Product.ProductTypeId");
+            ModelState.Remove("Product.UserId");
+            ModelState.Remove("Product.ProductType");
+
 
             var product = viewModel.Product;
 
@@ -124,8 +126,8 @@ namespace Bangazon.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label", product.ProductTypeId);
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", product.UserId);
+            //ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label", product.ProductTypeId);
+            //ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", product.UserId);
 
             viewModel.AvailableCategories = await _context.ProductType.ToListAsync();
             return View(viewModel);
