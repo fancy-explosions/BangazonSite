@@ -193,6 +193,195 @@ namespace Bangazon.Data {
                      Title = "Wrench",
                      Quantity = 32,
                      Price = 21.69
+                 }, new Product()
+                 {
+                     ProductId = 7,
+                     ProductTypeId = 1,
+                     UserId = user.Id,
+                     Description = "It flies high",
+                     Title = "Kite",
+                     Quantity = 100,
+                     Price = 2.99
+                 },
+                 new Product()
+                 {
+                     ProductId = 8,
+                     ProductTypeId = 1,
+                     UserId = user.Id,
+                     Description = "21 Speed Mountain bike",
+                     Title = "Bicycle",
+                     Quantity = 100,
+                     Price = 499.99
+                 },
+                 new Product()
+                 {
+                     ProductId = 9,
+                     ProductTypeId = 1,
+                     UserId = user.Id,
+                     Description = "Catch fish with this",
+                     Title = "Fishing Rod",
+                     Quantity = 100,
+                     Price = 2.99
+                 },
+                 new Product()
+                 {
+                     ProductId = 10,
+                     ProductTypeId = 2,
+                     UserId = user.Id,
+                     Description = "Clothes get dry in it",
+                     Title = "Dryer",
+                     Quantity = 100,
+                     Price = 2.99
+                 },
+                 new Product()
+                 {
+                     ProductId = 11,
+                     ProductTypeId = 2,
+                     UserId = user.Id,
+                     Description = "Cleans dirty dishes",
+                     Title = "Dishwasher",
+                     Quantity = 100,
+                     Price = 2.99
+                 },
+                 new Product()
+                 {
+                     ProductId = 12,
+                     ProductTypeId = 1,
+                     UserId = user.Id,
+                     Description = "It flies high",
+                     Title = "Kite",
+                     Quantity = 100,
+                     Price = 2.99
+                 },
+                 new Product()
+                 {
+                     ProductId = 13,
+                     ProductTypeId = 1,
+                     UserId = user.Id,
+                     Description = "It flies high",
+                     Title = "Kite",
+                     Quantity = 100,
+                     Price = 2.99
+                 },
+                 new Product()
+                 {
+                     ProductId = 14,
+                     ProductTypeId = 1,
+                     UserId = user.Id,
+                     Description = "It flies high",
+                     Title = "Kite",
+                     Quantity = 100,
+                     Price = 2.99
+                 },
+                 new Product()
+                 {
+                     ProductId = 15,
+                     ProductTypeId = 1,
+                     UserId = user.Id,
+                     Description = "It flies high",
+                     Title = "Kite",
+                     Quantity = 100,
+                     Price = 2.99
+                 },
+                 new Product()
+                 {
+                     ProductId = 16,
+                     ProductTypeId = 1,
+                     UserId = user.Id,
+                     Description = "It flies high",
+                     Title = "Kite",
+                     Quantity = 100,
+                     Price = 2.99
+                 },
+                 new Product()
+                 {
+                     ProductId = 17,
+                     ProductTypeId = 1,
+                     UserId = user.Id,
+                     Description = "It flies high",
+                     Title = "Kite",
+                     Quantity = 100,
+                     Price = 2.99
+                 },
+                 new Product()
+                 {
+                     ProductId = 18,
+                     ProductTypeId = 1,
+                     UserId = user.Id,
+                     Description = "It flies high",
+                     Title = "Kite",
+                     Quantity = 100,
+                     Price = 2.99
+                 },
+                 new Product()
+                 {
+                     ProductId = 19,
+                     ProductTypeId = 1,
+                     UserId = user.Id,
+                     Description = "It flies high",
+                     Title = "Kite",
+                     Quantity = 100,
+                     Price = 2.99
+                 },
+                 new Product()
+                 {
+                     ProductId = 20,
+                     ProductTypeId = 1,
+                     UserId = user.Id,
+                     Description = "It flies high",
+                     Title = "Kite",
+                     Quantity = 100,
+                     Price = 2.99
+                 },
+                 new Product()
+                 {
+                     ProductId = 21,
+                     ProductTypeId = 1,
+                     UserId = user.Id,
+                     Description = "It flies high",
+                     Title = "Kite",
+                     Quantity = 100,
+                     Price = 2.99
+                 },
+                 new Product()
+                 {
+                     ProductId = 22,
+                     ProductTypeId = 1,
+                     UserId = user.Id,
+                     Description = "It flies high",
+                     Title = "Kite",
+                     Quantity = 100,
+                     Price = 2.99
+                 },
+                 new Product()
+                 {
+                     ProductId = 23,
+                     ProductTypeId = 1,
+                     UserId = user.Id,
+                     Description = "It flies high",
+                     Title = "Kite",
+                     Quantity = 100,
+                     Price = 2.99
+                 },
+                 new Product()
+                 {
+                     ProductId = 24,
+                     ProductTypeId = 1,
+                     UserId = user.Id,
+                     Description = "It flies high",
+                     Title = "Kite",
+                     Quantity = 100,
+                     Price = 2.99
+                 },
+                 new Product()
+                 {
+                     ProductId = 25,
+                     ProductTypeId = 1,
+                     UserId = user.Id,
+                     Description = "It flies high",
+                     Title = "Kite",
+                     Quantity = 100,
+                     Price = 2.99
                  }
             );
 
