@@ -4,11 +4,14 @@
 }
 <h1>Product Types</h1>
 <hr />
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 @foreach (var item in Model.GroupedProducts)
 {
     <h4>
         <div>
-            @Html.ActionLink(item.TypeName, "Details", "ProductTypes", new { id = item.TypeId }, null)
+            @Html.ActionLink(item.TypeName, "ProductTypeDetails", "Products", new { id = item.TypeId }, null)
             (@Html.DisplayFor(modelItem => item.ProductCount))
         </div>
     </h4>
