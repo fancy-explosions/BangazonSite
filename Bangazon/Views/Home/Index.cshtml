@@ -48,9 +48,13 @@
                     @Html.DisplayFor(modelItem => item.Quantity)
                 </td>
                 <td>
-                    <a asp-controller="Products" asp-action="ProductTypes" asp-route-id="@item.ProductTypeId">
-                        @Html.DisplayFor(modelItem => item.ProductType.Label)
-                    </a>
+                    
+                        
+                    
+                  
+                        @Html.DisplayFor(model => item.ProductType.Label)
+                        <a asp-controller="Products" asp-action="ProductTypeDetails" asp-route-id="@item.ProductTypeId">(Details)</a>
+                    
                 </td>
             </tr>
         }

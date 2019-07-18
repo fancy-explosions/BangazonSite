@@ -193,7 +193,6 @@ namespace Bangazon.Data {
                      Title = "Wrench",
                      Quantity = 32,
                      Price = 21.69
-<<<<<<< HEAD
                  }, new Product()
                  {
                      ProductId = 7,
@@ -343,18 +342,16 @@ namespace Bangazon.Data {
                      Title = "Electric Drum Set",
                      Quantity = 15,
                      Price = 599.99
-=======
                  },
                  new Product()
                  {
-                     ProductId = 7,
+                     ProductId = 22,
                      ProductTypeId = 4,
                      UserId = user.Id,
                      Description = "I play",
                      Title = "Dungeon Crawler",
                      Quantity = 3,
                      Price = 10.69
->>>>>>> master
                  }
             );
 
