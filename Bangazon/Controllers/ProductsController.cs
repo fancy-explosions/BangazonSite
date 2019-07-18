@@ -23,6 +23,7 @@ namespace Bangazon.Controllers
             _userManager = userManager;
         }
 
+        private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
         // GET: Products
         public async Task<IActionResult> Index()
         {

@@ -17,7 +17,7 @@
         {
             <a asp-action="Details" asp-route-id="@product.ProductId">
                 <li>
-                    @Html.DisplayFor(modelItem => product.Title)
+                    @Html.DisplayFor(modelItem => product.Title) (@Html.DisplayFor(modelItem => product.Quantity))
                 </li>
             </a>
         }
