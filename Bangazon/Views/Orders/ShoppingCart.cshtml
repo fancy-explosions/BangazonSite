@@ -42,7 +42,10 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => item.Product.Title)
+            @Html.DisplayFor(model => item.Product.Price)
+             @Html.DisplayFor(model => item.Product.ProductType.Label)
         </dd>
+        <div><a asp-action="DeleteOrderProduct" asp-route-id="@item.OrderProductId">Delete</a></div>
     }
 </div>
 <div>
