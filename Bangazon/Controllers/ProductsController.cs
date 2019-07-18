@@ -58,7 +58,7 @@ namespace Bangazon.Controllers
                     .Include(p => p.Products)
                        .FirstOrDefaultAsync(p => p.ProductTypeId == id);
 
-            if(productType == null)
+            if (productType == null)
             {
                 return NotFound();
             }
@@ -89,8 +89,8 @@ namespace Bangazon.Controllers
         // GET: Products/Create
         public async Task<IActionResult> Create()
         {
-            //ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label");
-            //ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id");
+            ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label");
+            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id");
 
             var viewModel = new ProductCreateViewModel
             {
@@ -108,10 +108,10 @@ namespace Bangazon.Controllers
         public async Task<IActionResult> Create(ProductCreateViewModel viewModel)
         {
 
+            var product = viewModel.Product;
 
             if (ModelState.IsValid)
             {
-                var product = viewModel.Product;
                 var currentUser = await _userManager.GetUserAsync(HttpContext.User);
                 product.UserId = currentUser.Id;
                 _context.Add(product);
@@ -119,8 +119,8 @@ namespace Bangazon.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            //ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label", product.ProductTypeId);
-            //ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", product.UserId);
+            ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label", product.ProductTypeId);
+            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", product.UserId);
 
             viewModel.AvailableCategories = await _context.ProductType.ToListAsync();
             return View(viewModel);
