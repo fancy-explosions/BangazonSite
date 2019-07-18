@@ -110,6 +110,9 @@ namespace Bangazon.Controllers
         public async Task<IActionResult> Create(ProductCreateViewModel viewModel)
         {
 
+            ModelState.Remove("Product.User");
+            ModelState.Remove("Product.ProductTypeId");
+
             var product = viewModel.Product;
 
             if (ModelState.IsValid)
