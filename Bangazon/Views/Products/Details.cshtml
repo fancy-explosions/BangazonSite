@@ -8,6 +8,9 @@
 
 <div>
     <h4>Product</h4>
+    <div>
+
+    </div>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -73,6 +76,7 @@
     </dl>
 </div>
 <div>
+    <a asp-controller="Orders" asp-action="Purchase" asp-route-id="@Model.ProductId">Purchase</a>|
     <a asp-action="Edit" asp-route-id="@Model.ProductId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
