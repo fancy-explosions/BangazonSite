@@ -26,7 +26,22 @@ namespace Bangazon.Controllers
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
         // GET: Products
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
+        {
+            ViewData["CurrentFilter"] = searchString;
+
+            var applicationDbContext = _context.Product.Include(p => p.ProductType).Include(p => p.User);
+
+            //If user enters a string into the search input field in the navbar - adding a where clause to include products whose name contains string.
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                applicationDbContext = _context.Product.Where(p => p.Title.Contains(searchString)).Include(p => p.ProductType).Include(p => p.User);
+            }
+
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+        public async Task<IActionResult> ProductCategories()
         {
             var model = new ProductListViewModel();
             // Build list of Product instances for display in view
@@ -44,7 +59,7 @@ namespace Bangazon.Controllers
                     Products = grouped.Select(x => x.p).Take(3).ToList()
                 }).ToListAsync();
 
-           
+
             return View(model);
         }
 
