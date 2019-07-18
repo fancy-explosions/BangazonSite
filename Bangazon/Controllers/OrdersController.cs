@@ -1,4 +1,6 @@
-﻿using System;
+﻿//Author Clifton Matuszewski
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +11,7 @@ using Bangazon.Data;
 using Bangazon.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Bangazon.Models.OrderViewModels;
 
 namespace Bangazon.Controllers
 {
@@ -32,6 +35,35 @@ namespace Bangazon.Controllers
         {
             var applicationDbContext = _context.Order.Include(o => o.PaymentType).Include(o => o.User);
             return View(await applicationDbContext.ToListAsync());
+        }
+        
+        //Get Shopping Cart Whoop whoop
+        public async Task<IActionResult> ShoppingCart()
+        {
+            OrderDetailViewModel viewModel = new OrderDetailViewModel();
+            var currentUser = await GetCurrentUserAsync();
+
+            Order order = await _context.Order
+                .Include(o => o.PaymentType)
+                .Include(o => o.User)
+                .Include(o => o.OrderProducts)
+                .ThenInclude(op => op.Product)
+                .FirstOrDefaultAsync(m => m.UserId == currentUser.Id.ToString() && m.PaymentTypeId == null);
+
+            viewModel.Order = order;
+
+            viewModel.LineItems = order.OrderProducts.GroupBy(op => op.Product)
+                .Select(g => new OrderLineItem
+                {
+                    Product = g.Key,
+                    Units = g.Select(l => l.ProductId).Count()
+                }).ToList();
+
+            if (order == null)
+            {
+                return View("EmptyCart");
+            }
+            return View(viewModel);
         }
 
         // GET: Orders/Details/5
