@@ -43,6 +43,8 @@ namespace Bangazon.Controllers
                     ProductCount = grouped.Select(x => x.p.ProductId).Count(),
                     Products = grouped.Select(x => x.p).Take(3).ToList()
                 }).ToListAsync();
+
+           
             return View(model);
         }
 
