@@ -198,10 +198,10 @@ namespace Bangazon.Data {
                      ProductId = 7,
                      ProductTypeId = 1,
                      UserId = user.Id,
-                     Description = "It flies high",
-                     Title = "Kite",
-                     Quantity = 100,
-                     Price = 2.99
+                     Description = "Get on the river",
+                     Title = "Canoe",
+                     Quantity = 30,
+                     Price = 249.99
                  },
                  new Product()
                  {
@@ -210,7 +210,7 @@ namespace Bangazon.Data {
                      UserId = user.Id,
                      Description = "21 Speed Mountain bike",
                      Title = "Bicycle",
-                     Quantity = 100,
+                     Quantity = 50,
                      Price = 499.99
                  },
                  new Product()
@@ -230,8 +230,8 @@ namespace Bangazon.Data {
                      UserId = user.Id,
                      Description = "Clothes get dry in it",
                      Title = "Dryer",
-                     Quantity = 100,
-                     Price = 2.99
+                     Quantity = 25,
+                     Price = 449.99
                  },
                  new Product()
                  {
@@ -240,148 +240,108 @@ namespace Bangazon.Data {
                      UserId = user.Id,
                      Description = "Cleans dirty dishes",
                      Title = "Dishwasher",
-                     Quantity = 100,
-                     Price = 2.99
+                     Quantity = 10,
+                     Price = 199.99
                  },
                  new Product()
                  {
                      ProductId = 12,
-                     ProductTypeId = 1,
+                     ProductTypeId = 2,
                      UserId = user.Id,
-                     Description = "It flies high",
-                     Title = "Kite",
-                     Quantity = 100,
-                     Price = 2.99
+                     Description = "Clean your dirty duds",
+                     Title = "Washing Maching",
+                     Quantity = 10,
+                     Price = 299.99
                  },
                  new Product()
                  {
                      ProductId = 13,
-                     ProductTypeId = 1,
+                     ProductTypeId = 3,
                      UserId = user.Id,
-                     Description = "It flies high",
-                     Title = "Kite",
-                     Quantity = 100,
-                     Price = 2.99
+                     Description = "Smooth rough surfaces, orbitally",
+                     Title = "Orbital Sander",
+                     Quantity = 50,
+                     Price = 39.99
                  },
                  new Product()
                  {
                      ProductId = 14,
-                     ProductTypeId = 1,
+                     ProductTypeId = 3,
                      UserId = user.Id,
-                     Description = "It flies high",
-                     Title = "Kite",
+                     Description = "Unclog a drin with this",
+                     Title = "Plunger",
                      Quantity = 100,
                      Price = 2.99
                  },
                  new Product()
                  {
                      ProductId = 15,
-                     ProductTypeId = 1,
+                     ProductTypeId = 3,
                      UserId = user.Id,
-                     Description = "It flies high",
-                     Title = "Kite",
-                     Quantity = 100,
-                     Price = 2.99
+                     Description = "Jack up your car",
+                     Title = "Pump Jack",
+                     Quantity = 50,
+                     Price = 99.99
                  },
                  new Product()
                  {
                      ProductId = 16,
-                     ProductTypeId = 1,
+                     ProductTypeId = 4,
                      UserId = user.Id,
-                     Description = "It flies high",
-                     Title = "Kite",
-                     Quantity = 100,
-                     Price = 2.99
+                     Description = "Fun for the whole family",
+                     Title = "Monopoly",
+                     Quantity = 200,
+                     Price = 12.99
                  },
                  new Product()
                  {
                      ProductId = 17,
-                     ProductTypeId = 1,
+                     ProductTypeId = 4,
                      UserId = user.Id,
-                     Description = "It flies high",
-                     Title = "Kite",
-                     Quantity = 100,
-                     Price = 2.99
+                     Description = "Tie yourself in knots",
+                     Title = "Twister",
+                     Quantity = 10,
+                     Price = 29.99
                  },
                  new Product()
                  {
                      ProductId = 18,
-                     ProductTypeId = 1,
+                     ProductTypeId = 4,
                      UserId = user.Id,
-                     Description = "It flies high",
-                     Title = "Kite",
-                     Quantity = 100,
+                     Description = "Learn words and have fun",
+                     Title = "Scrabble",
+                     Quantity = 50,
                      Price = 2.99
                  },
                  new Product()
                  {
                      ProductId = 19,
-                     ProductTypeId = 1,
+                     ProductTypeId = 5,
                      UserId = user.Id,
-                     Description = "It flies high",
-                     Title = "Kite",
-                     Quantity = 100,
-                     Price = 2.99
+                     Description = "88 Keys digital piano",
+                     Title = "Keyboard",
+                     Quantity = 10,
+                     Price = 1099.99
                  },
                  new Product()
                  {
                      ProductId = 20,
-                     ProductTypeId = 1,
+                     ProductTypeId = 5,
                      UserId = user.Id,
-                     Description = "It flies high",
-                     Title = "Kite",
-                     Quantity = 100,
-                     Price = 2.99
+                     Description = "6 string acoustic",
+                     Title = "Guitar",
+                     Quantity = 20,
+                     Price = 299.99
                  },
                  new Product()
                  {
                      ProductId = 21,
-                     ProductTypeId = 1,
+                     ProductTypeId = 5,
                      UserId = user.Id,
-                     Description = "It flies high",
-                     Title = "Kite",
-                     Quantity = 100,
-                     Price = 2.99
-                 },
-                 new Product()
-                 {
-                     ProductId = 22,
-                     ProductTypeId = 1,
-                     UserId = user.Id,
-                     Description = "It flies high",
-                     Title = "Kite",
-                     Quantity = 100,
-                     Price = 2.99
-                 },
-                 new Product()
-                 {
-                     ProductId = 23,
-                     ProductTypeId = 1,
-                     UserId = user.Id,
-                     Description = "It flies high",
-                     Title = "Kite",
-                     Quantity = 100,
-                     Price = 2.99
-                 },
-                 new Product()
-                 {
-                     ProductId = 24,
-                     ProductTypeId = 1,
-                     UserId = user.Id,
-                     Description = "It flies high",
-                     Title = "Kite",
-                     Quantity = 100,
-                     Price = 2.99
-                 },
-                 new Product()
-                 {
-                     ProductId = 25,
-                     ProductTypeId = 1,
-                     UserId = user.Id,
-                     Description = "It flies high",
-                     Title = "Kite",
-                     Quantity = 100,
-                     Price = 2.99
+                     Description = "Plug in and practice your rhythm",
+                     Title = "Electric Drum Set",
+                     Quantity = 15,
+                     Price = 599.99
                  }
             );
 
