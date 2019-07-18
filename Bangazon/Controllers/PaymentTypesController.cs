@@ -23,7 +23,7 @@ namespace Bangazon.Controllers
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
-
+        // this method gets all payment types of the current user
         // GET: PaymentTypes
         public async Task<IActionResult> Index()
         {
@@ -57,7 +57,7 @@ namespace Bangazon.Controllers
 
             return View(paymentType);
         }
-
+        // this gets the current user ready for the create
         // GET: PaymentTypes/Create
         public async Task<IActionResult> Create()
         {
@@ -68,7 +68,7 @@ namespace Bangazon.Controllers
             }
             return View();
         }
-
+        // this create adds the new payment type and passes in the current user as their payment type
         // POST: PaymentTypes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
