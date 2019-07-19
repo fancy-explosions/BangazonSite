@@ -1,6 +1,4 @@
-﻿//Author Clifton Matuszewski
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,13 +34,15 @@ namespace Bangazon.Controllers
             var applicationDbContext = _context.Order.Include(o => o.PaymentType).Include(o => o.User);
             return View(await applicationDbContext.ToListAsync());
         }
-        
-        //Get Shopping Cart Whoop whoop
-        public async Task<IActionResult> ShoppingCart()
-        {
-            OrderDetailViewModel viewModel = new OrderDetailViewModel();
-            var currentUser = await GetCurrentUserAsync();
 
+
+
+        // GET: Orders/Details/5
+        public async Task<IActionResult> ShoppingCart(int? id)
+        {
+            OrderDetailViewModel model = new OrderDetailViewModel();
+
+            var currentUser = await GetCurrentUserAsync();
             Order order = await _context.Order
                 .Include(o => o.PaymentType)
                 .Include(o => o.User)
@@ -50,25 +50,22 @@ namespace Bangazon.Controllers
                 .ThenInclude(op => op.Product)
                 .FirstOrDefaultAsync(m => m.UserId == currentUser.Id.ToString() && m.PaymentTypeId == null);
 
-            viewModel.Order = order;
+            model.Order = order;
 
-            viewModel.LineItems = order.OrderProducts.GroupBy(op => op.Product)
+            model.LineItems = order.OrderProducts
+                .GroupBy(op => op.Product)
                 .Select(g => new OrderLineItem
                 {
                     Product = g.Key,
-                    Units = g.Select(l => l.ProductId).Count()
+                    Units = g.Select(l => l.Product).Count(),
+                    Cost = g.Key.Price * g.Select(l => l.ProductId).Count()
                 }).ToList();
-
             if (order == null)
             {
                 return View("EmptyCart");
             }
-            return View(viewModel);
+            return View(model);
         }
-
-
-
-       
 
         // GET: Orders/Create
         public IActionResult Create()
@@ -173,25 +170,7 @@ namespace Bangazon.Controllers
             return View(order);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteItemFromCart(int prodId)
-        {
-            var currentUser = await GetCurrentUserAsync();
-            Order order = await _context.Order
-                .Include(o => o.PaymentType)
-                .Include(o => o.User)
-                .Include(o => o.OrderProducts)
-                .ThenInclude(op => op.Product)
-                .FirstOrDefaultAsync(m => m.UserId == currentUser.Id.ToString() && m.PaymentTypeId == null);
-
-            OrderProduct orderProduct = await _context.OrderProduct
-                .FirstOrDefaultAsync(op => op.OrderId == order.OrderId && op.ProductId == prodId);
-            _context.OrderProduct.Remove(orderProduct);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ShoppingCart));
-
-        }
+       
         
 
         // POST: Orders/Delete/5
@@ -203,38 +182,6 @@ namespace Bangazon.Controllers
             _context.Order.Remove(order);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-        // GET: Orders/Delete/5
-        public async Task<IActionResult> DeleteOrderProduct(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var orderProduct = await _context.OrderProduct
-                .Include(op => op.Product)
-                
-                .Include(op => op.Order)
-                
-                .FirstOrDefaultAsync(m => m.OrderProductId == id);
-            if (orderProduct == null)
-            {
-                return NotFound();
-            }
-
-            return View(orderProduct);
-        }
-
-        // POST: Orders/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmedOrderProduct(int id)
-        {
-            var orderProduct = await _context.OrderProduct.FindAsync(id);
-            _context.OrderProduct.Remove(orderProduct);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Details", "Orders", new { id = orderProduct.OrderId });
         }
 
         //GET: Create Order and OrderProduct: Products/Details/Purchase

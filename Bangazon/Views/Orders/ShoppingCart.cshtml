@@ -45,7 +45,7 @@
             @Html.DisplayFor(model => item.Product.Price)
              @Html.DisplayFor(model => item.Product.ProductType.Label)
         </dd>
-        <div><a asp-action="DeleteItemFromCart" asp-route-id="@item.OrderProductId">Delete</a></div>
+        <div><a asp-controller="OrderProducts" asp-action="Delete" asp-route-id="@item.OrderProductId">Delete</a></div>
     }
 </div>
 <div>
