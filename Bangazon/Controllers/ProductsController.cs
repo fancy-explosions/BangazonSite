@@ -42,6 +42,18 @@ namespace Bangazon.Controllers
 
             return View(await applicationDbContext.ToListAsync());
         }
+        public async Task<IActionResult> MyProducts()
+        {
+            var currentUser = await GetCurrentUserAsync();
+            if (currentUser == null)
+            {
+                return NotFound();
+            }
+            var userid = currentUser.Id;
+            var applicationDbContext = _context.Product.Include(p => p.User);
+            //return View(await applicationDbContext.ToListAsync());
+            return View(await _context.Product.Where(p => p.UserId == userid).ToListAsync());
+        }
 
         public async Task<IActionResult> ProductCategories()
         {
@@ -229,10 +241,27 @@ namespace Bangazon.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var product = await _context.Product.FindAsync(id);
-            _context.Product.Remove(product);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var orderProduct = await _context.OrderProduct
+                .Include(o => o.Product)
+                .FirstOrDefaultAsync(o => o.ProductId == id);
+            var product = await _context.Product
+            .Include(p => p.OrderProducts)
+            .FirstOrDefaultAsync(p => p.ProductId == id);
+
+            if (product.OrderProducts.Count == 0)
+            {
+                _context.Product.Remove(product);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                _context.OrderProduct.Remove(orderProduct);
+                await _context.SaveChangesAsync();
+                _context.Product.Remove(product);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         private bool ProductExists(int id)
