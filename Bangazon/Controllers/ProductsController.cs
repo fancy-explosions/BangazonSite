@@ -241,27 +241,36 @@ namespace Bangazon.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var orderProduct = await _context.OrderProduct
-                .Include(o => o.Product)
-                .FirstOrDefaultAsync(o => o.ProductId == id);
-            var product = await _context.Product
-            .Include(p => p.OrderProducts)
-            .FirstOrDefaultAsync(p => p.ProductId == id);
+            var product = await _context.Product.FindAsync(id);
+            var orderProducts =  _context.OrderProduct;
 
-            if (product.OrderProducts.Count == 0)
+            foreach (OrderProduct item in orderProducts)
             {
+                if (item.ProductId == product.ProductId)
+                {
+
+                    orderProducts.Remove(item);
+                }
+            }
                 _context.Product.Remove(product);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            else
-            {
-                _context.OrderProduct.Remove(orderProduct);
-                await _context.SaveChangesAsync();
-                _context.Product.Remove(product);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+                
+                return RedirectToAction("Index", "Home");
+
+            //if (product.OrderProducts.Count == 0)
+            //{
+            //    _context.Product.Remove(product);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction(nameof(Index));
+            //}
+            //else
+            //{
+            //    _context.OrderProduct.Remove(orderProduct);
+            //    await _context.SaveChangesAsync();
+            //    _context.Product.Remove(product);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction(nameof(Index));
+            //}
         }
 
         private bool ProductExists(int id)
