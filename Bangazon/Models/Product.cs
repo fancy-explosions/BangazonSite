@@ -1,3 +1,4 @@
+using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,6 +27,7 @@ namespace Bangazon.Models
         public string Title { get; set; }
 
         [Required]
+        [Range(0.01, 10000)]
         [DisplayFormat(DataFormatString = "{0:C}")]
         public double Price { get; set; }
 
@@ -48,6 +50,7 @@ namespace Bangazon.Models
         [Display(Name="Product Category")]
         public int ProductTypeId { get; set; }
 
+       
         public ProductType ProductType { get; set; }
 
         public virtual ICollection<OrderProduct> OrderProducts { get; set; }

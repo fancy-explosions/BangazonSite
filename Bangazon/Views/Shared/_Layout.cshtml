@@ -36,22 +36,32 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Product Types</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Products Categories</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="ProductCategories">Products Categories</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="PaymentTypes" asp-action="Index">Payment Types</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Sell Something</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Create">Sell Something</a>
                         </li>
                         <li class="nav-item">
+<<<<<<< HEAD
                             <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">My Products</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">View Cart</a>
+=======
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="ShoppingCart">View Cart</a>
+>>>>>>> master
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li>
+                            <form asp-controller="Products" asp-action="Index" method="get">
+                                <input type="text" placeholder="Search products" name="searchString" value="@ViewData["currentFilter"]" />
+                                <input type="submit" value="Search" class="btn btn-sm btn-primary" />
+                            </form>
                         </li>
                     </ul>
                 </div>

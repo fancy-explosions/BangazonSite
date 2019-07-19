@@ -1,4 +1,6 @@
-﻿using System;
+﻿//Author Clifton Matuszewski
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,7 +28,22 @@ namespace Bangazon.Controllers
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
         // GET: Products
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
+        {
+            ViewData["CurrentFilter"] = searchString;
+
+            var applicationDbContext = _context.Product.Include(p => p.ProductType).Include(p => p.User);
+
+            //If user enters a string into the search input field in the navbar - adding a where clause to include products whose name contains string.
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                applicationDbContext = _context.Product.Where(p => p.Title.Contains(searchString)).Include(p => p.ProductType).Include(p => p.User);
+            }
+
+            return View(await applicationDbContext.ToListAsync());
+        }
+
+        public async Task<IActionResult> ProductCategories()
         {
             var model = new ProductListViewModel();
             // Build list of Product instances for display in view
@@ -44,7 +61,7 @@ namespace Bangazon.Controllers
                     Products = grouped.Select(x => x.p).Take(3).ToList()
                 }).ToListAsync();
 
-           
+
             return View(model);
         }
 
@@ -60,7 +77,7 @@ namespace Bangazon.Controllers
                     .Include(p => p.Products)
                        .FirstOrDefaultAsync(p => p.ProductTypeId == id);
 
-            if(productType == null)
+            if (productType == null)
             {
                 return NotFound();
             }
@@ -89,29 +106,47 @@ namespace Bangazon.Controllers
         }
 
         // GET: Products/Create
-        public IActionResult Create()
+        [Authorize]
+        public async Task<IActionResult> Create()
         {
             ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label");
             ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id");
-            return View();
+
+            var viewModel = new ProductCreateViewModel
+            {
+                AvailableCategories = await _context.ProductType.ToListAsync()
+            };
+
+            return View(viewModel);
         }
 
         // POST: Products/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,DateCreated,Description,Title,Price,Quantity,UserId,City,ImagePath,Active,ProductTypeId")] Product product)
+        public async Task<IActionResult> Create(ProductCreateViewModel viewModel)
         {
+
+            ModelState.Remove("Product.User");
+            ModelState.Remove("Product.UserId");
+            ModelState.Remove("Product.ProductType");
+
+
+            var product = viewModel.Product;
+
             if (ModelState.IsValid)
             {
+                var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+                product.UserId = currentUser.Id;
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProductTypeId"] = new SelectList(_context.ProductType, "ProductTypeId", "Label", product.ProductTypeId);
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", product.UserId);
-            return View(product);
+
+            viewModel.AvailableCategories = await _context.ProductType.ToListAsync();
+            return View(viewModel);
         }
 
         // GET: Products/Edit/5
