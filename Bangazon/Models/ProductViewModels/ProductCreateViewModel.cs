@@ -13,6 +13,7 @@ namespace Bangazon.Models.ProductViewModels
 
         public List<SelectListItem> CategoryOptions
         {
+            //Note: This code checks for available categories to assign a product. It also adds a placeholder for the dropdown.
             get
             {
                 if(AvailableCategories == null)
@@ -24,10 +25,6 @@ namespace Bangazon.Models.ProductViewModels
 
                 return ac;
             }
-        }
-        //public List<SelectListItem> CategoryOptions =>
-            
-        //    AvailableCategories?.Select(c => new SelectListItem(c.Label, c.ProductTypeId.ToString())).ToList();
-            
+        }            
     }
 }
