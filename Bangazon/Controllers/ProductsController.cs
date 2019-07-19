@@ -39,14 +39,20 @@ namespace Bangazon.Controllers
             {
                 applicationDbContext = _context.Product.Where(p => p.Title.Contains(searchString)).Include(p => p.ProductType).Include(p => p.User);
             }
-           
-            if (!String.IsNullOrEmpty(searchString))
+
+            return View(await applicationDbContext.ToListAsync());
+        }
+        public async Task<IActionResult> MyProducts()
+        {
+            var currentUser = await GetCurrentUserAsync();
+            if (currentUser == null)
             {
-                applicationDbContext = _context.Product.Where(p => p.City.Contains(searchString)).Include(p => p.ProductType).Include(p => p.User);
+                return NotFound();
             }
-
-
-                return View(await applicationDbContext.ToListAsync());
+            var userid = currentUser.Id;
+            var applicationDbContext = _context.Product.Include(p => p.User);
+            //return View(await applicationDbContext.ToListAsync());
+            return View(await _context.Product.Where(p => p.UserId == userid).ToListAsync());
         }
 
         public async Task<IActionResult> ProductCategories()
@@ -236,9 +242,35 @@ namespace Bangazon.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var product = await _context.Product.FindAsync(id);
-            _context.Product.Remove(product);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var orderProducts =  _context.OrderProduct;
+
+            foreach (OrderProduct item in orderProducts)
+            {
+                if (item.ProductId == product.ProductId)
+                {
+
+                    orderProducts.Remove(item);
+                }
+            }
+                _context.Product.Remove(product);
+                await _context.SaveChangesAsync();
+                
+                return RedirectToAction("Index", "Home");
+
+            //if (product.OrderProducts.Count == 0)
+            //{
+            //    _context.Product.Remove(product);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction(nameof(Index));
+            //}
+            //else
+            //{
+            //    _context.OrderProduct.Remove(orderProduct);
+            //    await _context.SaveChangesAsync();
+            //    _context.Product.Remove(product);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction(nameof(Index));
+            //}
         }
 
         private bool ProductExists(int id)
