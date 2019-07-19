@@ -55,7 +55,7 @@ namespace Bangazon.Controllers
 
             if (order == null)
             {
-                return RedirectToAction("Index", "Products");
+                return RedirectToAction("Index", "Home");
             }
             model.LineItems = order.OrderProducts
                 .GroupBy(op => op.Product)
@@ -201,7 +201,7 @@ namespace Bangazon.Controllers
                 _context.Order.Remove(order);
             }
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Home");
         }
 
         //GET: Create Order and OrderProduct: Products/Details/Purchase
