@@ -151,7 +151,7 @@ namespace Bangazon.Controllers
         }
 
         // GET: Orders/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> DeleteOrder(int? id)
         {
             if (id == null)
             {
@@ -161,7 +161,9 @@ namespace Bangazon.Controllers
             var order = await _context.Order
                 .Include(o => o.PaymentType)
                 .Include(o => o.User)
-                .FirstOrDefaultAsync(m => m.OrderId == id);
+                .Include(o => o.OrderProducts)
+                .ThenInclude(op => op.Product)
+                .FirstOrDefaultAsync(o => o.OrderId == id);
             if (order == null)
             {
                 return NotFound();
@@ -176,9 +178,15 @@ namespace Bangazon.Controllers
         // POST: Orders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteOrder(int id)
         {
-            var order = await _context.Order.FindAsync(id);
+
+            var order = await _context.Order.Where(o => o.OrderId == id)
+               .Include(o => o.PaymentType)
+               .Include(o => o.User)
+               .Include(o => o.OrderProducts)
+               .ThenInclude(op => op.Product)
+               .FirstOrDefaultAsync(m => m.OrderId == id);
             _context.Order.Remove(order);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
