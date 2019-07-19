@@ -1,3 +1,4 @@
+using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -48,6 +49,7 @@ namespace Bangazon.Models
         [Display(Name="Product Category")]
         public int ProductTypeId { get; set; }
 
+       
         public ProductType ProductType { get; set; }
 
         public virtual ICollection<OrderProduct> OrderProducts { get; set; }
