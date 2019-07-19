@@ -9,6 +9,7 @@ using Bangazon.Data;
 using Bangazon.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Bangazon.Models.OrderViewModels;
 
 namespace Bangazon.Controllers
 {
@@ -34,24 +35,36 @@ namespace Bangazon.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Orders/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var order = await _context.Order
+
+        // GET: Orders/Details/5
+        public async Task<IActionResult> ShoppingCart(int? id)
+        {
+            OrderDetailViewModel model = new OrderDetailViewModel();
+
+            var currentUser = await GetCurrentUserAsync();
+            Order order = await _context.Order
                 .Include(o => o.PaymentType)
                 .Include(o => o.User)
-                .FirstOrDefaultAsync(m => m.OrderId == id);
+                .Include(o => o.OrderProducts)
+                .ThenInclude(op => op.Product)
+                .FirstOrDefaultAsync(m => m.UserId == currentUser.Id.ToString() && m.PaymentTypeId == null);
+
+            model.Order = order;
+
+            model.LineItems = order.OrderProducts
+                .GroupBy(op => op.Product)
+                .Select(g => new OrderLineItem
+                {
+                    Product = g.Key,
+                    Units = g.Select(l => l.Product).Count(),
+                    Cost = g.Key.Price * g.Select(l => l.ProductId).Count()
+                }).ToList();
             if (order == null)
             {
-                return NotFound();
+                return View("EmptyCart");
             }
-
-            return View(order);
+            return View(model);
         }
 
         // GET: Orders/Create
@@ -60,6 +73,8 @@ namespace Bangazon.Controllers
             ViewData["PaymentTypeId"] = new SelectList(_context.PaymentType, "PaymentTypeId", "AccountNumber");
             ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id");
             return View();
+
+
         }
 
         // POST: Orders/Create
@@ -154,6 +169,27 @@ namespace Bangazon.Controllers
 
             return View(order);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteItemFromCart(int prodId)
+        {
+            var currentUser = await GetCurrentUserAsync();
+            Order order = await _context.Order
+                .Include(o => o.PaymentType)
+                .Include(o => o.User)
+                .Include(o => o.OrderProducts)
+                .ThenInclude(op => op.Product)
+                .FirstOrDefaultAsync(m => m.UserId == currentUser.Id.ToString() && m.PaymentTypeId == null);
+
+            OrderProduct orderProduct = await _context.OrderProduct
+                .FirstOrDefaultAsync(op => op.OrderId == order.OrderId && op.ProductId == prodId);
+            _context.OrderProduct.Remove(orderProduct);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ShoppingCart));
+
+        }
+        
 
         // POST: Orders/Delete/5
         [HttpPost, ActionName("Delete")]
