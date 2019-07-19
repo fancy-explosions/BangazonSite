@@ -18,11 +18,13 @@ namespace Bangazon.Models
         public DateTime DateCreated {get;set;}
 
         [Required]
+        [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         [StringLength(255)]
         public string Description { get; set; }
 
         [Required]
         [Display(Name = "Product Name")]
+        [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         [StringLength(55, ErrorMessage="Please shorten the product title to 55 characters")]
         public string Title { get; set; }
 
