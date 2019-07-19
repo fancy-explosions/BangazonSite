@@ -40,6 +40,7 @@ namespace Bangazon.Controllers
         // GET: Orders/Details/5
         public async Task<IActionResult> ShoppingCart(int? id)
         {
+            
             OrderDetailViewModel model = new OrderDetailViewModel();
 
             var currentUser = await GetCurrentUserAsync();
@@ -52,6 +53,10 @@ namespace Bangazon.Controllers
 
             model.Order = order;
 
+            if (order == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             model.LineItems = order.OrderProducts
                 .GroupBy(op => op.Product)
                 .Select(g => new OrderLineItem
@@ -60,10 +65,6 @@ namespace Bangazon.Controllers
                     Units = g.Select(l => l.Product).Count(),
                     Cost = g.Key.Price * g.Select(l => l.ProductId).Count()
                 }).ToList();
-            if (order == null)
-            {
-                return View("EmptyCart");
-            }
             return View(model);
         }
 
@@ -161,7 +162,10 @@ namespace Bangazon.Controllers
             var order = await _context.Order
                 .Include(o => o.PaymentType)
                 .Include(o => o.User)
-                .FirstOrDefaultAsync(m => m.OrderId == id);
+                .Include(o => o.OrderProducts)
+                .ThenInclude(op => op.Product)
+
+                .FirstOrDefaultAsync(o => o.OrderId == id);
             if (order == null)
             {
                 return NotFound();
@@ -178,10 +182,26 @@ namespace Bangazon.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var user = await GetCurrentUserAsync();
+           var userid = user.Id;
             var order = await _context.Order.FindAsync(id);
-            _context.Order.Remove(order);
+            var orderProducts = _context.OrderProduct;
+                var products = _context.Product;
+            
+            
+            foreach(OrderProduct item in orderProducts)
+            {
+                if (item.OrderId == order.OrderId && userid == order.UserId)
+                {
+                    orderProducts.Remove(item);
+                }
+            }
+            if (userid == order.UserId)
+            {
+                _context.Order.Remove(order);
+            }
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Home");
         }
 
         //GET: Create Order and OrderProduct: Products/Details/Purchase
