@@ -36,6 +36,9 @@ namespace Bangazon.Data {
                 .Property (b => b.DateCreated)
                 .HasDefaultValueSql ("GETDATE()");
 
+            modelBuilder.Entity<Product>().Ignore(t => t.ProductsSold);
+            base.OnModelCreating(modelBuilder)
+
             // Restrict deletion of related product when OrderProducts entry is removed
             modelBuilder.Entity<Product> ()
                 .HasMany (o => o.OrderProducts)
