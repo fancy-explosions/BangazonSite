@@ -4,25 +4,40 @@
 }
 <h1>Product Types</h1>
 <hr />
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-@foreach (var item in Model.GroupedProducts)
+@foreach (var item in Model.ProductTypes)
 {
-    <h4>
-        <div>
-            @Html.ActionLink(item.TypeName, "ProductTypeDetails", "Products", new { id = item.TypeId }, null)
-            (@Html.DisplayFor(modelItem => item.ProductCount))
-        </div>
-    </h4>
-    <ul>
-        @foreach (var product in item.Products)
+    if (Model.GroupedProducts.Any(p => p.TypeId == item.ProductTypeId))
+    {
+
+        @foreach (var gp in Model.GroupedProducts)
         {
-            <a asp-action="Details" asp-route-id="@product.ProductId">
-                <li>
-                    @Html.DisplayFor(modelItem => product.Title) (@Html.DisplayFor(modelItem => product.Quantity))
-                </li>
-            </a>
+            if (gp.TypeId == item.ProductTypeId)
+            {
+                <h4>
+                    <a asp-action="ProductTypeDetails" asp-controller="Products" asp-route-id="@item.ProductTypeId">@Html.DisplayFor(modelItem => gp.TypeName)</a>
+                    (@Html.DisplayFor(modelItem => gp.ProductCount))
+                </h4>
+                <hr />
+                @foreach (var product in gp.Products)
+                {
+
+                    <p>
+                        <a asp-action="Details" asp-route-id="@product.ProductId">@Html.DisplayFor(modelItem => product.Title)</a>
+                    </p>
+
+                }
+                <hr />
+            }
         }
-    </ul>
+    }
+    else
+    {
+        <h4>
+            <a asp-action="Details" asp-controller="ProductTypes" asp-route-id="@item.ProductTypeId">@Html.DisplayFor(modelItem => item.Label)</a> (0)
+        </h4>
+        <hr />
+    }
 }
+<div>
+    <a asp-action="Index">Home</a>
+</div>
