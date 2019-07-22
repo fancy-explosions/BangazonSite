@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bangazon.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190718195458_seeddata")]
-    partial class seeddata
+    [Migration("20190722191942_soft")]
+    partial class soft
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -85,7 +85,7 @@ namespace Bangazon.Migrations
                         {
                             Id = "00000000-ffff-ffff-ffff-ffffffffffff",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "03d93916-a237-444b-a14b-d6f033e31c3b",
+                            ConcurrencyStamp = "7d2a6401-fc6a-446b-964a-ed882417c619",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             FirstName = "Admina",
@@ -93,7 +93,7 @@ namespace Bangazon.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEE2T/R5ZBKd1iUr8bdjVr8wh8cm5Z+5VirfEGgRB2V95pgc9tfLL+uMMIOLgfsCqVQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIdzRWjFhZtnk5iDwitUG+HLZPzB9mt0vuHtEenMXTNMxnLzSYKgf2C4OWocusk5rA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "7f434309-a4d9-48e9-9ebb-8803db794577",
                             StreetAddress = "123 Infinity Way",
@@ -179,6 +179,8 @@ namespace Bangazon.Migrations
                         .IsRequired()
                         .HasMaxLength(20);
 
+                    b.Property<bool>("Active");
+
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasDefaultValueSql("GETDATE()");
@@ -201,6 +203,7 @@ namespace Bangazon.Migrations
                         {
                             PaymentTypeId = 1,
                             AccountNumber = "86753095551212",
+                            Active = true,
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "American Express",
                             UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
@@ -209,6 +212,7 @@ namespace Bangazon.Migrations
                         {
                             PaymentTypeId = 2,
                             AccountNumber = "4102948572991",
+                            Active = true,
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Discover",
                             UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
@@ -507,6 +511,18 @@ namespace Bangazon.Migrations
                             ProductTypeId = 5,
                             Quantity = 15,
                             Title = "Electric Drum Set",
+                            UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
+                        },
+                        new
+                        {
+                            ProductId = 22,
+                            Active = true,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "I play",
+                            Price = 10.69,
+                            ProductTypeId = 4,
+                            Quantity = 3,
+                            Title = "Dungeon Crawler",
                             UserId = "00000000-ffff-ffff-ffff-ffffffffffff"
                         });
                 });

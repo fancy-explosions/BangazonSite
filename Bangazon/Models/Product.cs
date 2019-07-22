@@ -1,3 +1,4 @@
+using Bangazon.Interfaces;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bangazon.Models
 {
-    public class Product
+    public class Product : IIsDeleted
     {
         [Key]
         public int ProductId {get;set;}
@@ -42,7 +43,7 @@ namespace Bangazon.Models
         public string City {get; set;}
 
         public string ImagePath {get; set;}
-
+        
         public bool Active { get; set; }
 
         [Required]

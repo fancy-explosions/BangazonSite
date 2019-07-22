@@ -1,3 +1,4 @@
+using Bangazon.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,8 +7,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bangazon.Models
 {
-  public class PaymentType
-  {
+  public class PaymentType : IIsDeleted
+    {
     [Key]
     public int PaymentTypeId { get; set; }
 
@@ -24,12 +25,19 @@ namespace Bangazon.Models
     [StringLength(20)]
     public string AccountNumber { get; set; }
 
-    [Required]
+    public bool Active { get; set; }
+
+        [Required]
     public string UserId {get; set;}
 
     [Required]
     public ApplicationUser User { get; set; }
 
     public ICollection<Order> Orders { get; set; }
+    public PaymentType ()
+        {
+            Active = true;
+        }
+
   }
 }
