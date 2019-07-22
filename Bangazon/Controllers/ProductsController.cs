@@ -45,7 +45,9 @@ namespace Bangazon.Controllers
         public async Task<IActionResult> MyProducts()
         {
             var currentUser = await GetCurrentUserAsync();
-            var applicationDbContext = _context.Product.Where(p => p.UserId == currentUser.Id && p.Active == true).Include(p => p.ProductType).Include(p => p.User);
+            var applicationDbContext = _context.Product.Where(p => p.UserId == currentUser.Id && p.Active == true)
+                                                        .Include(p => p.ProductType)
+                                                        .Include(p => p.User);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -246,19 +248,9 @@ namespace Bangazon.Controllers
         public async Task<IActionResult> SoftDeleteConfirmed(int id)
         {
             var product = await _context.Product.FindAsync(id);
-            product.Active = false;
-
-            try
-            {
-                _context.Product.Remove(product);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                _context.Update(product);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction(nameof(Index));
+            _context.Product.Remove(product);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(MyProducts));
         }
 
         private bool ProductExists(int id)
