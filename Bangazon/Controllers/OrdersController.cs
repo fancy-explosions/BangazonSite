@@ -69,35 +69,35 @@ namespace Bangazon.Controllers
         }
 
         //GET: Orders/OrderHistory
-        public async Task<IActionResult> OrderHistory(int? id)
-        {
-            OrderDetailViewModel model = new OrderDetailViewModel();
+        //public async Task<IActionResult> OrderHistory(int? id)
+        //{
+        //    OrderHistoryViewModel model = new OrderHistoryViewModel();
 
-            var currentUser = await GetCurrentUserAsync();
-            Order order = await _context.Order
-                .Include(o => o.PaymentType)
-                .Include(o => o.User)
-                .Include(o => o.OrderProducts)
-                .ThenInclude(op => op.Product)
-                .FirstOrDefaultAsync(m => m.UserId == currentUser.Id.ToString() && m.PaymentTypeId != null);
+        //    var currentUser = await GetCurrentUserAsync();
+        //    List<Order> orders = await _context.Order
+        //        .Include(o => o.PaymentType)
+        //        .Include(o => o.User)
+        //        .Include(o => o.OrderProducts)
+        //        .ThenInclude(op => op.Product)
+        //        .Where(m => m.UserId == currentUser.Id.ToString() && m.PaymentTypeId != null).ToListAsync();
 
-            model.Order = order;
+        //    model.Order = orders;
             
-            if(order == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            model.LineItems = order.OrderProducts
-                .GroupBy(op => op.Product)
-                .Select(g => new OrderLineItem
-                {
-                    Product = g.Key,
-                    Units = g.Select(l => l.Product).Count(),
-                    Cost = g.Key.Price * g.Select(l => l.ProductId).Count()
-                }).ToList();
-            return View(model);
+        //    if(orders == null)
+        //    {
+        //        return RedirectToAction("Index", "Home");
+        //    }
+        //    model.LineItems = orders.OrderProducts
+        //        .GroupBy(op => op.Product)
+        //        .Select(g => new OrderLineItem
+        //        {
+        //            Product = g.Key,
+        //            Units = g.Select(l => l.Product).Count(),
+        //            Cost = g.Key.Price * g.Select(l => l.ProductId).Count()
+        //        }).ToList();
+        //    return View(model);
 
-        }
+        //}
 
         // GET: Orders/Create
         public IActionResult Create()

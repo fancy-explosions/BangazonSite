@@ -29,5 +29,10 @@ namespace Bangazon.Models
     public PaymentType PaymentType {get;set;}
 
     public virtual ICollection<OrderProduct> OrderProducts { get; set; }
-  }
+
+        public static implicit operator Order(List<Order> v)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
