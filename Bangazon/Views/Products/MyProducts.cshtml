@@ -4,7 +4,7 @@
     ViewData["Title"] = "MyProducts";
 }
 
-<h1>MyProducts</h1>
+<h1>My Products</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -74,7 +74,6 @@
                     @Html.DisplayFor(modelItem => item.Product.ProductType.Label)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Product.ProductId">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Product.ProductId">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.Product.ProductId">Delete</a>
                 </td>
