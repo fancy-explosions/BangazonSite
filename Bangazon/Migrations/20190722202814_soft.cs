@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Bangazon.Migrations
 {
-    public partial class seeddata : Migration
+    public partial class soft : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -178,6 +178,7 @@ namespace Bangazon.Migrations
                     DateCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "GETDATE()"),
                     Description = table.Column<string>(maxLength: 55, nullable: false),
                     AccountNumber = table.Column<string>(maxLength: 20, nullable: false),
+                    Active = table.Column<bool>(nullable: false),
                     UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -282,7 +283,7 @@ namespace Bangazon.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "StreetAddress", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "00000000-ffff-ffff-ffff-ffffffffffff", 0, "03d93916-a237-444b-a14b-d6f033e31c3b", "admin@admin.com", true, "Admina", "Straytor", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEE2T/R5ZBKd1iUr8bdjVr8wh8cm5Z+5VirfEGgRB2V95pgc9tfLL+uMMIOLgfsCqVQ==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794577", "123 Infinity Way", false, "admin@admin.com" });
+                values: new object[] { "00000000-ffff-ffff-ffff-ffffffffffff", 0, "7302ac71-7b15-43ce-a745-633d494588fc", "admin@admin.com", true, "Admina", "Straytor", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAEAACcQAAAAEC4nz0ptqERZof9x1037MTMbo1clHIMWHwZApkQBqaR1r82ilCKHni1aY1aMqA/Vaw==", null, false, "7f434309-a4d9-48e9-9ebb-8803db794577", "123 Infinity Way", false, "admin@admin.com" });
 
             migrationBuilder.InsertData(
                 table: "ProductType",
@@ -308,18 +309,23 @@ namespace Bangazon.Migrations
 
             migrationBuilder.InsertData(
                 table: "PaymentType",
-                columns: new[] { "PaymentTypeId", "AccountNumber", "Description", "UserId" },
-                values: new object[] { 1, "86753095551212", "American Express", "00000000-ffff-ffff-ffff-ffffffffffff" });
+                columns: new[] { "PaymentTypeId", "AccountNumber", "Active", "Description", "UserId" },
+                values: new object[] { 1, "86753095551212", true, "American Express", "00000000-ffff-ffff-ffff-ffffffffffff" });
 
             migrationBuilder.InsertData(
                 table: "PaymentType",
-                columns: new[] { "PaymentTypeId", "AccountNumber", "Description", "UserId" },
-                values: new object[] { 2, "4102948572991", "Discover", "00000000-ffff-ffff-ffff-ffffffffffff" });
+                columns: new[] { "PaymentTypeId", "AccountNumber", "Active", "Description", "UserId" },
+                values: new object[] { 2, "4102948572991", true, "Discover", "00000000-ffff-ffff-ffff-ffffffffffff" });
 
             migrationBuilder.InsertData(
                 table: "Product",
                 columns: new[] { "ProductId", "Active", "City", "Description", "ImagePath", "Price", "ProductTypeId", "Quantity", "Title", "UserId" },
                 values: new object[] { 19, true, null, "88 Keys digital piano", null, 1099.99, 5, 10, "Keyboard", "00000000-ffff-ffff-ffff-ffffffffffff" });
+
+            migrationBuilder.InsertData(
+                table: "Product",
+                columns: new[] { "ProductId", "Active", "City", "Description", "ImagePath", "Price", "ProductTypeId", "Quantity", "Title", "UserId" },
+                values: new object[] { 22, true, null, "I play", null, 10.69, 4, 3, "Dungeon Crawler", "00000000-ffff-ffff-ffff-ffffffffffff" });
 
             migrationBuilder.InsertData(
                 table: "Product",
@@ -364,12 +370,12 @@ namespace Bangazon.Migrations
             migrationBuilder.InsertData(
                 table: "Product",
                 columns: new[] { "ProductId", "Active", "City", "Description", "ImagePath", "Price", "ProductTypeId", "Quantity", "Title", "UserId" },
-                values: new object[] { 3, true, null, "It cuts things", null, 31.489999999999998, 3, 18, "Saw", "00000000-ffff-ffff-ffff-ffffffffffff" });
+                values: new object[] { 4, true, null, "It puts holes in things", null, 24.890000000000001, 3, 12, "Electric Drill", "00000000-ffff-ffff-ffff-ffffffffffff" });
 
             migrationBuilder.InsertData(
                 table: "Product",
                 columns: new[] { "ProductId", "Active", "City", "Description", "ImagePath", "Price", "ProductTypeId", "Quantity", "Title", "UserId" },
-                values: new object[] { 20, true, null, "6 string acoustic", null, 299.99000000000001, 5, 20, "Guitar", "00000000-ffff-ffff-ffff-ffffffffffff" });
+                values: new object[] { 3, true, null, "It cuts things", null, 31.489999999999998, 3, 18, "Saw", "00000000-ffff-ffff-ffff-ffffffffffff" });
 
             migrationBuilder.InsertData(
                 table: "Product",
@@ -414,7 +420,7 @@ namespace Bangazon.Migrations
             migrationBuilder.InsertData(
                 table: "Product",
                 columns: new[] { "ProductId", "Active", "City", "Description", "ImagePath", "Price", "ProductTypeId", "Quantity", "Title", "UserId" },
-                values: new object[] { 4, true, null, "It puts holes in things", null, 24.890000000000001, 3, 12, "Electric Drill", "00000000-ffff-ffff-ffff-ffffffffffff" });
+                values: new object[] { 20, true, null, "6 string acoustic", null, 299.99000000000001, 5, 20, "Guitar", "00000000-ffff-ffff-ffff-ffffffffffff" });
 
             migrationBuilder.InsertData(
                 table: "Product",
