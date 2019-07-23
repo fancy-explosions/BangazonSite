@@ -11,13 +11,13 @@ namespace Bangazon.Models
     public class Product : IIsDeleted
     {
         [Key]
-        public int ProductId {get;set;}
+        public int ProductId { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
         [Display(Name ="Date Created")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime DateCreated {get;set;}
+        public DateTime DateCreated { get; set; }
 
         [Required]
         [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
@@ -27,7 +27,7 @@ namespace Bangazon.Models
         [Required]
         [Display(Name = "Product Name")]
         [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
-        [StringLength(55, ErrorMessage="Please shorten the product title to 55 characters")]
+        [StringLength(55, ErrorMessage = "Please shorten the product title to 55 characters")]
         public string Title { get; set; }
 
         [Required]
@@ -39,30 +39,45 @@ namespace Bangazon.Models
         public int Quantity { get; set; }
 
         [Required]
-        public string UserId {get; set;}
+        public string UserId { get; set; }
 
-        public string City {get; set;}
+        public string City { get; set; }
+
+    
         [Display(Name= "Image")]
         public string ImagePath {get; set;}
         
+
         public bool Active { get; set; }
 
         [Required]
         public ApplicationUser User { get; set; }
 
         [Required]
-        [Display(Name="Product Category")]
+        [Display(Name = "Product Category")]
         public int ProductTypeId { get; set; }
 
        [Display(Name ="Product Category")]
+
         public ProductType ProductType { get; set; }
 
         public virtual ICollection<OrderProduct> OrderProducts { get; set; }
 
-        public Product ()
+        public Product()
         {
             Active = true;
         }
 
+
+        [NotMapped]
+        public int QuantityRemaining
+        {
+            get
+            {
+                return Quantity - OrderProducts.Count;
+            }
+        }
     }
 }
+
+    

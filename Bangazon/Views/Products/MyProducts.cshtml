@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Bangazon.Models.Product>
+﻿@model IEnumerable<Bangazon.Models.ProductViewModels.ProductDetailViewModel>
 
 @{
     ViewData["Title"] = "MyProducts";
@@ -13,25 +13,25 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.DateCreated)
+                @Html.DisplayNameFor(model => model.Product.DateCreated)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.Product.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @Html.DisplayNameFor(model => model.Product.Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @Html.DisplayNameFor(model => model.Product.Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Quantity)
+                @Html.DisplayNameFor(model => model.Product.Quantity)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.City)
+                Products Sold
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProductType)
+                @Html.DisplayNameFor(model => model.Product.ProductType)
             </th>
             <th></th>
         </tr>
@@ -40,29 +40,32 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.DateCreated)
+                @Html.DisplayFor(modelItem => item.Product.DateCreated)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => item.Product.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                @Html.DisplayFor(modelItem => item.Product.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                @Html.DisplayFor(modelItem => item.Product.Price)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
+                @Html.DisplayFor(modelItem => item.Product.Quantity)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.City)
+                    @(item.Product.Quantity - item.Product.QuantityRemaining)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.City)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProductType.Label)
+                @Html.DisplayFor(modelItem => item.Product.ProductType.Label)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.Product.ProductId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Product.ProductId">Delete</a>
             </td>
         </tr>
 }

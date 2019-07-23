@@ -48,7 +48,12 @@ namespace Bangazon.Controllers
             var applicationDbContext = _context.Product.Where(p => p.UserId == currentUser.Id && p.Active == true)
                                                         .Include(p => p.ProductType)
                                                         .Include(p => p.User);
-            return View(await applicationDbContext.ToListAsync());
+            var viewModel = applicationDbContext.Select(p => new ProductDetailViewModel
+            {
+                Product = p,
+                orderProducts = _context.OrderProduct.Where(op => op.ProductId == p.ProductId).ToList()
+            });
+            return View(viewModel);
         }
 
         public async Task<IActionResult> ProductCategories()
