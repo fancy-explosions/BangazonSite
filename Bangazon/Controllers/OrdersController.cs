@@ -98,7 +98,7 @@ namespace Bangazon.Controllers
 
             var currentUser = await GetCurrentUserAsync();
             Order order = await _context.Order
-                .Include(o => o.User)
+                .Include(o => o.PaymentType)
                 .Include(o => o.OrderProducts)
                 .ThenInclude(op => op.Product)
                 .FirstOrDefaultAsync(m => m.UserId == currentUser.Id.ToString() && m.OrderId == id);
@@ -119,18 +119,18 @@ namespace Bangazon.Controllers
                 }).ToList();
 
 
-            List<Double> ListOfMath = new List<Double>();
+            List<Double> SumOfLineItems = new List<Double>();
 
             foreach(var item in model.LineItems)
             {
                 var unit = item.Units;
                 var cost = item.Cost;
-
                 var productTotal = unit * cost;
-                ListOfMath.Add(productTotal);
+
+                SumOfLineItems.Add(productTotal);
             }
 
-            var Total = ListOfMath.Sum();
+            var Total = SumOfLineItems.Sum();
             model.Total = Total;
            
             return View(model);

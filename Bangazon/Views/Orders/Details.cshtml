@@ -23,21 +23,23 @@
             @Html.DisplayFor(model => model.Order.DateCompleted)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Order.User)
+            @Html.DisplayNameFor(model => model.Order.PaymentType)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Order.User.Id)
+            @Html.DisplayFor(model => model.Order.PaymentType.Description)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Order.PaymentType)
+            @Html.DisplayNameFor(model => model.Order.PaymentType.AccountNumber)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Order.PaymentType.AccountNumber)
         </dd>
-        <dt class="col-sm-10">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Total)
         </dt>
-        <dd>@Html.DisplayFor(model => model.Total)</dd>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Total)
+        </dd>
     </dl>
     @foreach (var item in Model.Order.OrderProducts)
     {
