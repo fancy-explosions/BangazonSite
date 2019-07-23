@@ -307,6 +307,7 @@ namespace Bangazon.Controllers
             OrderProduct thing = new OrderProduct();
 
             productToAdd.Quantity = productToAdd.Quantity - 1;
+            
             thing.OrderId = currentOrder.OrderId;
             thing.ProductId = productToAdd.ProductId;
 
