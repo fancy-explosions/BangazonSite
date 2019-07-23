@@ -16,7 +16,7 @@ namespace Bangazon.Controllers
     public class OrdersController : Controller
     {
         private readonly ApplicationDbContext _context;
-        
+
         private readonly UserManager<ApplicationUser> _userManager;
 
         public OrdersController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
@@ -37,10 +37,10 @@ namespace Bangazon.Controllers
 
 
 
-        // GET: Orders/Details/5
+        // GET: Orders/ShoppingCart/5
         public async Task<IActionResult> ShoppingCart(int? id)
         {
-            
+
             OrderDetailViewModel model = new OrderDetailViewModel();
 
             var currentUser = await GetCurrentUserAsync();
@@ -65,6 +65,74 @@ namespace Bangazon.Controllers
                     Units = g.Select(l => l.Product).Count(),
                     Cost = g.Key.Price * g.Select(l => l.ProductId).Count()
                 }).ToList();
+            return View(model);
+        }
+
+        //GET: Orders/OrderHistory
+        public async Task<IActionResult> OrderHistory(int? id)
+        {
+            OrderHistoryViewModel model = new OrderHistoryViewModel();
+
+            var currentUser = await GetCurrentUserAsync();
+            List<Order> orders = await _context.Order
+                .Include(o => o.PaymentType)
+                .Include(o => o.User)
+                .Include(o => o.OrderProducts)
+                .ThenInclude(op => op.Product)
+                .Where(m => m.UserId == currentUser.Id.ToString() && m.PaymentTypeId != null).ToListAsync();
+
+            model.OrderHistory = orders;
+
+            if (orders == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View(model);
+        }
+
+        // GET: Orders/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+
+            OrderDetailViewModel model = new OrderDetailViewModel();
+
+            var currentUser = await GetCurrentUserAsync();
+            Order order = await _context.Order
+                .Include(o => o.PaymentType)
+                .Include(o => o.OrderProducts)
+                .ThenInclude(op => op.Product)
+                .FirstOrDefaultAsync(m => m.UserId == currentUser.Id.ToString() && m.OrderId == id);
+
+            model.Order = order;
+
+            if (order == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            model.LineItems = order.OrderProducts
+                .GroupBy(op => op.Product)
+                .Select(g => new OrderLineItem
+                {
+                    Product = g.Key,
+                    Units = g.Select(l => l.Product).Count(),
+                    Cost = g.Key.Price * g.Select(l => l.ProductId).Count(),
+                }).ToList();
+
+
+            List<Double> SumOfLineItems = new List<Double>();
+
+            foreach(var item in model.LineItems)
+            {
+                var unit = item.Units;
+                var cost = item.Cost;
+                var productTotal = unit * cost;
+
+                SumOfLineItems.Add(productTotal);
+            }
+
+            var Total = SumOfLineItems.Sum();
+            model.Total = Total;
+           
             return View(model);
         }
 
@@ -174,8 +242,8 @@ namespace Bangazon.Controllers
             return View(order);
         }
 
-       
-        
+
+
 
         // POST: Orders/Delete/5
         [HttpPost, ActionName("Delete")]
@@ -183,13 +251,13 @@ namespace Bangazon.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var user = await GetCurrentUserAsync();
-           var userid = user.Id;
+            var userid = user.Id;
             var order = await _context.Order.FindAsync(id);
             var orderProducts = _context.OrderProduct;
-                var products = _context.Product;
-            
-            
-            foreach(OrderProduct item in orderProducts)
+            var products = _context.Product;
+
+
+            foreach (OrderProduct item in orderProducts)
             {
                 if (item.OrderId == order.OrderId && userid == order.UserId)
                 {
@@ -222,7 +290,7 @@ namespace Bangazon.Controllers
             // If no order, create one, else add to existing order
             if (openOrder == null)
             {
-               
+
                 currentOrder.UserId = user.Id;
                 currentOrder.PaymentType = null;
                 _context.Add(currentOrder);
@@ -233,7 +301,7 @@ namespace Bangazon.Controllers
             }
             else
             {
-                currentOrder = openOrder;     
+                currentOrder = openOrder;
             }
 
             OrderProduct thing = new OrderProduct();
@@ -249,7 +317,7 @@ namespace Bangazon.Controllers
             return RedirectToAction("Details", "Products", new { id = productToAdd.ProductId });
         }
 
-            private bool OrderExists(int id)
+        private bool OrderExists(int id)
         {
             return _context.Order.Any(e => e.OrderId == id);
         }
