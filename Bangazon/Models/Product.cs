@@ -42,13 +42,10 @@ namespace Bangazon.Models
 
         public string City { get; set; }
 
-<<<<<<< HEAD
+
         public string ImagePath { get; set; }
 
-=======
-        public string ImagePath {get; set;}
-        
->>>>>>> master
+
         public bool Active { get; set; }
 
         [Required]
@@ -68,9 +65,16 @@ namespace Bangazon.Models
             Active = true;
         }
 
+
         [NotMapped]
-        public int ProductsSold { get; set; }
-
-
+        public int QuantityRemaining
+        {
+            get
+            {
+                return Quantity - OrderProducts.Count;
+            }
+        }
     }
 }
+
+    

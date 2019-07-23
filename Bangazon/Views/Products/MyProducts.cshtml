@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Bangazon.Models.Product>
+﻿@model IEnumerable<Bangazon.Models.ProductViewModels.ProductDetailViewModel>
 
 @{
     ViewData["Title"] = "MyProducts";
@@ -13,77 +13,78 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.DateCreated)
+                @Html.DisplayNameFor(model => model.Product.DateCreated)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.Product.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @Html.DisplayNameFor(model => model.Product.Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @Html.DisplayNameFor(model => model.Product.Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Quantity)
+                @Html.DisplayNameFor(model => model.Product.Quantity)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProductsSold)
+                Products Sold
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.City)
+                @Html.DisplayNameFor(model => model.Product.City)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ImagePath)
+                @Html.DisplayNameFor(model => model.Product.ImagePath)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User)
+                @Html.DisplayNameFor(model => model.Product.User)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProductType)
+                @Html.DisplayNameFor(model => model.Product.ProductType)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateCreated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductsSold)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.City)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImagePath)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductType.Label)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.DateCreated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Quantity)
+                </td>
+                <td>
+                    @(item.Product.Quantity - item.QuantityRemaining)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.ImagePath)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.User.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.ProductType.Label)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Product.ProductId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Product.ProductId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Product.ProductId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
