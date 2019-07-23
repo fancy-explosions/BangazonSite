@@ -30,12 +30,10 @@
         @foreach (var item in Model.OrderHistory)
         {
         <tr>
-
             <td>
-                <a asp-controller="Order" asp-action="Details" asp-route-id="@item.OrderId">
+                <a asp-controller="Orders" asp-action="Details" asp-route-id="@item.OrderId">
                     @Html.DisplayFor(model => item.OrderId)
                 </a>
-                
             </td>
 
             <td>
