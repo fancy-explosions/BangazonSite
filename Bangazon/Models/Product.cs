@@ -43,10 +43,9 @@ namespace Bangazon.Models
 
         public string City { get; set; }
 
-    
-        [Display(Name= "Image")]
-        public string ImagePath {get; set;}
-        
+        [Display(Name ="Image")]
+        public string ImagePath { get; set; }
+
 
         public bool Active { get; set; }
 
@@ -57,7 +56,6 @@ namespace Bangazon.Models
         [Display(Name = "Product Category")]
         public int ProductTypeId { get; set; }
 
-       [Display(Name ="Product Category")]
 
         public ProductType ProductType { get; set; }
 
@@ -79,5 +77,3 @@ namespace Bangazon.Models
         }
     }
 }
-
-    
