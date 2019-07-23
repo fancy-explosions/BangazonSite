@@ -4,7 +4,7 @@
     ViewData["Title"] = "MyProducts";
 }
 
-<h1>MyProducts</h1>
+<h1>My Products</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -34,10 +34,7 @@
                 @Html.DisplayNameFor(model => model.Product.City)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product.ImagePath)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product.User)
+                @Html.DisplayNameFor(model => model.Product.User.FullName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Product.ProductType)
@@ -71,16 +68,12 @@
                     @Html.DisplayFor(modelItem => item.Product.City)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Product.ImagePath)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Product.User.Id)
+                    @Html.DisplayFor(modelItem => item.Product.User.FullName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Product.ProductType.Label)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Product.ProductId">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Product.ProductId">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.Product.ProductId">Delete</a>
                 </td>

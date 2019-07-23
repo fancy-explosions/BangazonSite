@@ -15,6 +15,7 @@ namespace Bangazon.Models
 
         [Required]
         [DataType(DataType.Date)]
+        [Display(Name ="Date Created")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime DateCreated { get; set; }
 
@@ -42,7 +43,7 @@ namespace Bangazon.Models
 
         public string City { get; set; }
 
-
+        [Display(Name ="Image")]
         public string ImagePath { get; set; }
 
 
@@ -76,5 +77,3 @@ namespace Bangazon.Models
         }
     }
 }
-
-    

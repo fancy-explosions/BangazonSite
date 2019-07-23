@@ -13,10 +13,12 @@ namespace Bangazon.Models
 
     [Required]
     [DataType(DataType.Date)]
+    [Display(Name ="Date Created")]
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public DateTime DateCreated {get;set;}
 
     [DataType(DataType.Date)]
+    [Display(Name ="Date Completed")]
     public DateTime? DateCompleted {get;set;}
 
     [Required]

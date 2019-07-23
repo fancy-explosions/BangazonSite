@@ -45,10 +45,7 @@ else
                     @Html.DisplayNameFor(model => model.ImagePath)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Active)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.User)
+                    @Html.DisplayNameFor(model => model.User.FullName)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.ProductType)
@@ -79,19 +76,12 @@ else
                         @Html.DisplayFor(modelItem => item.City)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ImagePath)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Active)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.User.Id)
+                        @Html.DisplayFor(modelItem => item.User.FullName)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.ProductType.Label)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
                         <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
                         <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
                     </td>
