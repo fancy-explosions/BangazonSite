@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading;
+using Bangazon.Interfaces;
 using Bangazon.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bangazon.Data {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser> {
-        public ApplicationDbContext (DbContextOptions<ApplicationDbContext> options) : base (options) { }
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<ProductType> ProductType { get; set; }
@@ -16,38 +20,39 @@ namespace Bangazon.Data {
         public DbSet<Order> Order { get; set; }
         public DbSet<OrderProduct> OrderProduct { get; set; }
 
-        protected override void OnModelCreating (ModelBuilder modelBuilder) {
-            base.OnModelCreating (modelBuilder);
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
-            modelBuilder.Entity<Order> ()
-                .Property (b => b.DateCreated)
-                .HasDefaultValueSql ("GETDATE()");
+            modelBuilder.Entity<Order>()
+                .Property(b => b.DateCreated)
+                .HasDefaultValueSql("GETDATE()");
 
             // Restrict deletion of related order when OrderProducts entry is removed
-            modelBuilder.Entity<Order> ()
-                .HasMany (o => o.OrderProducts)
-                .WithOne (l => l.Order)
-                .OnDelete (DeleteBehavior.Restrict);
+            modelBuilder.Entity<Order>()
+                .HasMany(o => o.OrderProducts)
+                .WithOne(l => l.Order)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Product> ()
-                .Property (b => b.DateCreated)
-                .HasDefaultValueSql ("GETDATE()");
+            modelBuilder.Entity<Product>()
+                .Property(b => b.DateCreated)
+                .HasDefaultValueSql("GETDATE()");
 
             modelBuilder.Entity<Product>().Ignore(t => t.ProductsSold);
             
 
             // Restrict deletion of related product when OrderProducts entry is removed
-            modelBuilder.Entity<Product> ()
-                .HasMany (o => o.OrderProducts)
-                .WithOne (l => l.Product)
-                .OnDelete (DeleteBehavior.Restrict);
+            modelBuilder.Entity<Product>()
+                .HasMany(o => o.OrderProducts)
+                .WithOne(l => l.Product)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<PaymentType> ()
-                .Property (b => b.DateCreated)
-                .HasDefaultValueSql ("GETDATE()");
+            modelBuilder.Entity<PaymentType>()
+                .Property(b => b.DateCreated)
+                .HasDefaultValueSql("GETDATE()");
 
             ApplicationUser user = new ApplicationUser
             {
@@ -67,7 +72,7 @@ namespace Bangazon.Data {
             user.PasswordHash = passwordHash.HashPassword(user, "Admin8*");
             modelBuilder.Entity<ApplicationUser>().HasData(user);
 
-            modelBuilder.Entity<PaymentType> ().HasData (
+            modelBuilder.Entity<PaymentType>().HasData(
                 new PaymentType()
                 {
                     PaymentTypeId = 1,
@@ -359,7 +364,7 @@ namespace Bangazon.Data {
                  }
             );
 
-            modelBuilder.Entity<Order> ().HasData (
+            modelBuilder.Entity<Order>().HasData(
                 new Order()
                 {
                     OrderId = 1,
@@ -368,7 +373,7 @@ namespace Bangazon.Data {
                 }
             );
 
-            modelBuilder.Entity<OrderProduct> ().HasData (
+            modelBuilder.Entity<OrderProduct>().HasData(
                 new OrderProduct()
                 {
                     OrderProductId = 1,
@@ -377,7 +382,7 @@ namespace Bangazon.Data {
                 }
             );
 
-            modelBuilder.Entity<OrderProduct> ().HasData (
+            modelBuilder.Entity<OrderProduct>().HasData(
                 new OrderProduct()
                 {
                     OrderProductId = 2,
@@ -385,6 +390,37 @@ namespace Bangazon.Data {
                     ProductId = 2
                 }
             );
+        }
+        // Override method for SaveChangesAsync(). The purpose of overriding this method is to be able to Soft Delete resources that implement the IIsDeleted interface. The method still allows resources to be deleted if there are no constraint Database Exceptions thrown. 
+        public override async System.Threading.Tasks.Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            // The ChangeTracker will start looking through the db context and find which entities have a changed state
+            ChangeTracker.DetectChanges();
+
+            // We declare the markedAsDeleted variable which contains all the entities that currently hold the state 'Deleted'
+            var markedAsDeleted = ChangeTracker.Entries().Where(x => x.State == EntityState.Deleted);
+
+            // We try to run the SaveChangesAsync() method, which will still delete any entities that are marked as 'Deleted' in the database context. However, if there are any database exceptions due to constraints, it will run the code block within the catch.
+            try
+            {
+                return await base.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                // For each entity in the markedAsDeleted variable, we check to make sure that the resource implements the IIsDeleted interface. If so, the entities model state is changed to 'Unchanged' from 'Deleted'. Then, we changed the entity's Active boolean property to false, making the new enitity state 'Modified'. After this, we run the SaveChangesAsync method which finds the 'Modified' entity, and does an Update to the database. This is used to filter out items that the user has 'Deleted', but we still want in the database.
+                foreach (var item in markedAsDeleted)
+                {
+                    if (item.Entity is IIsDeleted entity)
+                    {
+                        // Set the entity to unchanged (if we mark the whole entity as Modified, every field gets sent to Db as an update)
+                        item.State = EntityState.Unchanged;
+                        // Only update the IsDeleted flag - only this will get sent to the Db
+                        entity.Active = false;
+                    }
+                }
+                return await base.SaveChangesAsync();
+
+            }
         }
     }
 }
